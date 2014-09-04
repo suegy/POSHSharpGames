@@ -10,26 +10,45 @@ public class DonePlayerMovement : MonoBehaviour
 	
 	private Animator anim;				// Reference to the animator component.
 	private DoneHashIDs hash;			// Reference to the HashIDs.
-	
+
+    public float moveHorizontal;
+    public float moveVertical;
 	
 	void Awake ()
 	{
 		// Setting up the references.
 		anim = GetComponent<Animator>();
+        moveHorizontal = 0;
+        moveVertical = 0;
 		hash = GameObject.FindGameObjectWithTag(DoneTags.gameController).GetComponent<DoneHashIDs>();
 		
 		// Set the weight of the shouting layer to 1.
 		anim.SetLayerWeight(1, 1f);
 	}
-	
+
+    public void MoveHorizontal(float direction)
+    {
+        moveHorizontal = direction;
+    }
+    public void MoveVertical(float direction)
+    {
+        moveVertical = direction;
+    }
+    public void MoveLeft()
+    {
+        MovementManagement(1f, 0, false);
+    }
+    public void MoveRight()
+    {
+        MovementManagement(-1f, 0, false);
+    }
 	
 	void FixedUpdate ()
 	{
 		// Cache the inputs.
-		float h = Input.GetAxis("Horizontal");
-		float v = Input.GetAxis("Vertical");
+		float h = moveHorizontal + Input.GetAxis("Horizontal");
+		float v = moveVertical + Input.GetAxis("Vertical");
 		bool sneak = Input.GetButton("Sneak");
-		
 		MovementManagement(h, v, sneak);
 	}
 	

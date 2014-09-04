@@ -118,7 +118,7 @@ namespace POSH.unity
             }
         }
 
-        void Start()
+        void Awake()
         {
             // Setting up the references.
             enemySight = GetComponent<DoneEnemySight>();
